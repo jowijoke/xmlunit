@@ -7,5 +7,18 @@
 	<classpathentry kind="lib" path="/home/johnk/Downloads/xmlunit-matchers-2.3.0.jar"/>
 	<classpathentry kind="lib" path="/home/johnk/Downloads/junit-4.12.jar" sourcepath="/home/johnk/.m2/repository/junit/junit/4.12/junit-4.12-sources.jar"/>
 	<classpathentry kind="lib" path="/home/johnk/Downloads/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="/home/johnk/Downloads/identityiq-7.1/integration/TDI/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="/home/johnk/Downloads/identityiq-7.1/integration/TDI/commons-httpclient.jar"/>
+	<classpathentry kind="lib" path="/home/johnk/Downloads/identityiq-7.1/integration/TDI/iiqAssemblyLines.jar"/>
+	<classpathentry kind="lib" path="/home/johnk/Downloads/identityiq-7.1/integration/TDI/commons-logging-1.3.jar"/>
+	<classpathentry kind="lib" path="/home/johnk/Downloads/identityiq-7.1/integration/TDI/lib/fluent-hc-4.5.3.jar"/>
+	<classpathentry kind="lib" path="/home/johnk/Downloads/identityiq-7.1/integration/TDI/lib/httpclient-4.5.3.jar"/>
+	<classpathentry kind="lib" path="/home/johnk/Downloads/identityiq-7.1/integration/TDI/lib/httpclient-cache-4.5.3.jar"/>
+	<classpathentry kind="lib" path="/home/johnk/Downloads/identityiq-7.1/integration/TDI/lib/httpclient-win-4.5.3.jar"/>
+	<classpathentry kind="lib" path="/home/johnk/Downloads/identityiq-7.1/integration/TDI/lib/jna-4.1.0.jar"/>
+	<classpathentry kind="lib" path="/home/johnk/Downloads/identityiq-7.1/integration/TDI/lib/jna-platform-4.1.0.jar"/>
+	<classpathentry kind="lib" path="/home/johnk/Downloads/identityiq-7.1/integration/TDI/iiqIntegration.jar"/>
+	<classpathentry kind="lib" path="/home/johnk/Downloads/identityiq-7.1/integration/TDI/lib/httpcore-4.4.6.jar"/>
+	<classpathentry kind="lib" path="/home/johnk/Downloads/identityiq-7.1/integration/TDI/json.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
