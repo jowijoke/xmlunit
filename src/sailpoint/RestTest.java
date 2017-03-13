@@ -1,6 +1,7 @@
 package sailpoint;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -67,39 +68,29 @@ public class RestTest {
             JSONObject jsonObject = new JSONObject(line);
             JSONArray objResponse = (JSONArray) jsonObject.get("objects");
             
-            HashMap<String, String> objMap = new HashMap<String, String>();
+            ArrayList<String> objName = new ArrayList<String>();
             HashMap<String, String> xmlMap = new HashMap<String, String>();
 
             for(int i=0; i<objResponse.length(); i++){
-            	objMap.put(objResponse.getJSONObject(i).getString("name"), objResponse.getJSONObject(i).getString("id"));
+            	objName.add(objResponse.getJSONObject(i).getString("name"));
             }
-            
-            // Get a set of the entries
-            Set set = objMap.entrySet();
-            
-            // Get an iterator
-            Iterator i = set.iterator();
-            
-            // Display elements
-            while(i.hasNext()) {
-               Map.Entry me = (Map.Entry)i.next();
-               System.out.print(me.getKey() + ": ");
-               System.out.println(me.getValue());
-               
+            System.out.println("\nObjectList: " + objName);
+           
+              for(String j:objName) { 
                //
                // Request to get objects xml
                //
-               String xmlRequest = "http://" + iiqIP + ":" + String.valueOf(iiqPort) + "/diff/rest/debug/Application/" + me.getValue();
+               String xmlRequest = "http://" + iiqIP + ":" + String.valueOf(iiqPort) + "/diff/rest/debug/Application/" + j.replaceAll(" ", "%20");
                request = new HttpGet(xmlRequest);
                response = client.execute(request);
                rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
                line = "";
                while ((line = rd.readLine()) != null) {
                    JSONObject jsonObject2 = new JSONObject(line);
-                   JSONArray objResponse2 = (JSONArray) jsonObject2.get("objects");
+                   JSONArray xmlArray = (JSONArray) jsonObject2.get("objects");
                    
-                   for(int j=0; j<objResponse2.length(); j++){
-                   	xmlMap.put(objResponse2.getJSONObject(j).getString("id"), objResponse2.getJSONObject(j).getString("xml"));
+                   for(int x=0; x<xmlArray.length(); x++){
+                   	xmlMap.put(xmlArray.getJSONObject(x).getString("id"), xmlArray.getJSONObject(x).getString("xml"));
                    }
                    
                    
@@ -107,13 +98,13 @@ public class RestTest {
 
             }
             
-         // Get a set of the entries
+         // Get a set of the xml entries
             Set sets = xmlMap.entrySet();
             
-            // Get an iterator
+            // Get an iterator to get xml
             Iterator x = sets.iterator();
             
-            // Display elements
+            // Display xml elements
             while(x.hasNext()) {
                Map.Entry m = (Map.Entry)x.next();
                System.out.print(m.getKey() + ": ");
@@ -128,6 +119,5 @@ public class RestTest {
             System.out.println("Exception:" + e.toString());
         }
     }
+ 
 }
- 
- 
