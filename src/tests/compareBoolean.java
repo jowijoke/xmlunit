@@ -102,6 +102,7 @@ public class compareBoolean {
 	            .withTest(Input.fromString(diff))
 	            .ignoreComments()
 	            .ignoreWhitespace()
+	            .checkForSimilar()
 	            .withAttributeFilter(a -> !("created".equals(a.getName()) || "id".equals(a.getName()) || "modified".equals(a.getName()) )
 )	            .withDifferenceEvaluator(new IIQDifferenceEvaluator())
 	            .build();

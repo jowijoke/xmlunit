@@ -752,24 +752,12 @@ public class compareNodeOrder {
 	
 	final String diff = "<?xml version='1.0' encoding='UTF-8'?>\n" + 
 			"<!DOCTYPE Workflow PUBLIC \"sailpoint.dtd\" \"sailpoint.dtd\">\n" + 
-			"<Workflow configForm=\"Provisioning Workflow Config Form\" created=\"1488793264001\" handler=\"sailpoint.api.StandardWorkflowHandler\" id=\"ff8081815aa2fdde015aa2fe5f810046\" libraries=\"Identity,Role,PolicyViolation,LCM,BatchRequest\" modified=\"1490624042554\" name=\"LCM Provisioning\" taskType=\"LCM\" type=\"LCMProvisioning\">\n" + 
-			"  <Variable input=\"true\" name=\"identityName\">\n" + 
-			"    <Description>The name of the identity being updated.</Description>\n" + 
-			"  </Variable>\n" + 
-			"  <Variable initializer=\"false\" input=\"true\" name=\"endOnManualWorkItems\">\n" + 
-			"    <Description>Option to skip requests with manual work items.</Description>\n" + 
-			"  </Variable>\n" + 
-			"  <Variable initializer=\"false\" input=\"true\" name=\"endOnProvisioningForms\">\n" + 
-			"    <Description>Option to skip requests with provisioning forms.</Description>\n" + 
-			"  </Variable>\n" + 
+			"<Workflow configForm=\"Provisioning Workflow Config Form\" created=\"1488811533902\" handler=\"sailpoint.api.StandardWorkflowHandler\" id=\"ff8081815aa414bc015aa415264e0046\" libraries=\"Identity,Role,PolicyViolation,LCM,BatchRequest\" name=\"LCM Provisioning\" taskType=\"LCM\" type=\"LCMProvisioning\">\n" + 
 			"  <Variable initializer=\"script:(identityDisplayName != void) ? identityDisplayName : resolveDisplayName(identityName)\" input=\"true\" name=\"identityDisplayName\">\n" + 
 			"    <Description>\n" + 
 			"      The displayName of the identity being updated.\n" + 
 			"      Query for this using a projection query and fall back to the name.\n" + 
 			"    </Description>\n" + 
-			"  </Variable>\n" + 
-			"  <Variable input=\"true\" name=\"plan\">\n" + 
-			"    <Description>The provisioning plan ready to execute.</Description>\n" + 
 			"  </Variable>\n" + 
 			"  <Variable input=\"true\" name=\"flow\">\n" + 
 			"    <Description>\n" + 
@@ -782,6 +770,20 @@ public class compareNodeOrder {
 			"      RolesRequest\n" + 
 			"    </Description>\n" + 
 			"  </Variable>\n" + 
+			"  <Variable input=\"true\" name=\"identityName\">\n" + 
+			"    <Description>The name of the identity being updated.</Description>\n" + 
+			"  </Variable>\n" + 
+			"  <Variable initializer=\"false\" input=\"true\" name=\"endOnManualWorkItems\">\n" + 
+			"    <Description>Option to skip requests with manual work items.</Description>\n" + 
+			"  </Variable>\n" + 
+			"  <Variable initializer=\"false\" input=\"true\" name=\"endOnProvisioningForms\">\n" + 
+			"    <Description>Option to skip requests with provisioning forms.</Description>\n" + 
+			"  </Variable>\n" + 
+			
+			"  <Variable input=\"true\" name=\"plan\">\n" + 
+			"    <Description>The provisioning plan ready to execute.</Description>\n" + 
+			"  </Variable>\n" + 
+			
 			"  <Variable editable=\"true\" initializer=\"false\" name=\"optimisticProvisioning\">\n" + 
 			"    <Description>\n" + 
 			"      Set to true to enable optimistic provisioning.  This will cause\n" + 
@@ -1133,21 +1135,21 @@ public class compareNodeOrder {
 			"      </Description>\n" + 
 			"  </Variable>\n" + 
 			"  <RuleLibraries>\n" + 
-			"    <Reference class=\"sailpoint.object.Rule\" id=\"ff8081815aa2fc29015aa2fd3e18018b\" name=\"LCM Workflow Library\"/>\n" + 
+			"    <Reference class=\"sailpoint.object.Rule\" id=\"ff8081815aa41390015aa4143248018b\" name=\"LCM Workflow Library\"/>\n" + 
 			"  </RuleLibraries>\n" + 
 			"  <Step icon=\"Start\" name=\"Start\" posX=\"25\" posY=\"10\">\n" + 
 			"    <Transition to=\"Initialize\"/>\n" + 
 			"  </Step>\n" + 
 			"  <Step icon=\"Task\" name=\"Initialize\" posX=\"134\" posY=\"10\">\n" + 
 			"    <Arg name=\"flow\" value=\"ref:flow\"/>\n" + 
-			"    <Arg name=\"policiesToCheck\" value=\"ref:policiesToCheck\"/>\n" + 
+			"    <Arg name=\"formTemplate\" value=\"Identity Update\"/>\n" + 
 			"    <Arg name=\"identityName\" value=\"ref:identityName\"/>\n" + 
 			"    <Arg name=\"identityDisplayName\" value=\"ref:identityDisplayName\"/>\n" + 
 			"    <Arg name=\"launcher\" value=\"ref:launcher\"/>\n" + 
 			"    <Arg name=\"optimisticProvisioning\" value=\"ref:optimisticProvisioning\"/>\n" + 
 			"    <Arg name=\"plan\" value=\"ref:plan\"/>\n" + 
 			"    <Arg name=\"priority\" value=\"ref:workItemPriority\"/>\n" + 
-			"    <Arg name=\"formTemplate\" value=\"Identity Update\"/>\n" + 
+			"    <Arg name=\"policiesToCheck\" value=\"ref:policiesToCheck\"/>\n" + 
 			"    <Arg name=\"policyScheme\" value=\"ref:policyScheme\"/>\n" + 
 			"    <Arg name=\"source\" value=\"ref:source\"/>\n" + 
 			"    <Arg name=\"trace\" value=\"ref:trace\"/>\n" + 
@@ -1169,7 +1171,7 @@ public class compareNodeOrder {
 			"    <Return name=\"violationReviewDecision\" to=\"violationReviewDecision\"/>\n" + 
 			"    <Return merge=\"true\" name=\"workItemComments\" to=\"workItemComments\"/>\n" + 
 			"    <WorkflowRef>\n" + 
-			"      <Reference class=\"sailpoint.object.Workflow\" id=\"ff8081815aa2fdde015aa2fe5be0003f\" name=\"Identity Request Initialize\"/>\n" + 
+			"      <Reference class=\"sailpoint.object.Workflow\" id=\"ff8081815aa414bc015aa41520e7003f\" name=\"Identity Request Initialize\"/>\n" + 
 			"    </WorkflowRef>\n" + 
 			"    <Transition to=\"Exit On Manual Work Items\" when=\"script:(isTrue(endOnManualWorkItems) &amp;&amp; (project.getUnmanagedPlan() != null))\"/>\n" + 
 			"    <Transition to=\"Exit On Provisioning Form\" when=\"script:(isTrue(endOnProvisioningForms) &amp;&amp; (project.hasQuestions()))\"/>\n" + 
@@ -1193,7 +1195,7 @@ public class compareNodeOrder {
 			"    </Description>\n" + 
 			"    <Return name=\"ticketId\" to=\"externalTicketId\"/>\n" + 
 			"    <WorkflowRef>\n" + 
-			"      <Reference class=\"sailpoint.object.Workflow\" id=\"ff8081815aa2fc29015aa2fd3ae1017f\" name=\"Manage Ticket\"/>\n" + 
+			"      <Reference class=\"sailpoint.object.Workflow\" id=\"ff8081815aa41390015aa4142e21017f\" name=\"Manage Ticket\"/>\n" + 
 			"    </WorkflowRef>\n" + 
 			"    <Transition to=\"Pre Split Approve\" when=\"script:(!isNull(approvalSplitPoint) &amp;&amp; csvToList(approvalScheme).contains(approvalSplitPoint))\"/>\n" + 
 			"    <Transition to=\"Approve and Provision\"/>\n" + 
@@ -1262,7 +1264,7 @@ public class compareNodeOrder {
 			"    <Return name=\"workItemComments\"/>\n" + 
 			"    <Return name=\"project\"/>\n" + 
 			"    <WorkflowRef>\n" + 
-			"      <Reference class=\"sailpoint.object.Workflow\" id=\"ff8081815aa2fc29015aa2fd4d3401a8\" name=\"Provisioning Approval Subprocess\"/>\n" + 
+			"      <Reference class=\"sailpoint.object.Workflow\" id=\"ff8081815aa41390015aa41441a401a8\" name=\"Provisioning Approval Subprocess\"/>\n" + 
 			"    </WorkflowRef>\n" + 
 			"    <Transition to=\"Split Plan\"/>\n" + 
 			"  </Step>\n" + 
@@ -1346,7 +1348,7 @@ public class compareNodeOrder {
 			"    <Return name=\"workItemComments\" to=\"splitWorkItemComments\"/>\n" + 
 			"    <Return name=\"approvalSet\" to=\"splitApprovalSet\"/>\n" + 
 			"    <WorkflowRef>\n" + 
-			"      <Reference class=\"sailpoint.object.Workflow\" id=\"ff8081815aa2fdde015aa2fe5f360045\" name=\"Approve and Provision Subprocess\"/>\n" + 
+			"      <Reference class=\"sailpoint.object.Workflow\" id=\"ff8081815aa414bc015aa41525f50045\" name=\"Approve and Provision Subprocess\"/>\n" + 
 			"    </WorkflowRef>\n" + 
 			"    <Transition to=\"Assimilate Splits\"/>\n" + 
 			"  </Step>\n" + 
@@ -1411,7 +1413,7 @@ public class compareNodeOrder {
 			"    <Return name=\"approvalSet\" to=\"approvalSet\"/>\n" + 
 			"    <Return name=\"workItemComments\" to=\"workItemComments\"/>\n" + 
 			"    <WorkflowRef>\n" + 
-			"      <Reference class=\"sailpoint.object.Workflow\" id=\"ff8081815aa2fdde015aa2fe5f360045\" name=\"Approve and Provision Subprocess\"/>\n" + 
+			"      <Reference class=\"sailpoint.object.Workflow\" id=\"ff8081815aa414bc015aa41525f50045\" name=\"Approve and Provision Subprocess\"/>\n" + 
 			"    </WorkflowRef>\n" + 
 			"    <Transition to=\"Refresh Identity\"/>\n" + 
 			"  </Step>\n" + 
@@ -1450,7 +1452,7 @@ public class compareNodeOrder {
 			"      actors based on notification scheme.\n" + 
 			"    </Description>\n" + 
 			"    <WorkflowRef>\n" + 
-			"      <Reference class=\"sailpoint.object.Workflow\" id=\"ff8081815aa2fdde015aa2fe5cb60041\" name=\"Identity Request Notify\"/>\n" + 
+			"      <Reference class=\"sailpoint.object.Workflow\" id=\"ff8081815aa414bc015aa415222d0041\" name=\"Identity Request Notify\"/>\n" + 
 			"    </WorkflowRef>\n" + 
 			"    <Transition to=\"end\"/>\n" + 
 			"  </Step>\n" + 
@@ -1481,7 +1483,7 @@ public class compareNodeOrder {
 			"      Call the standard subprocess that can audit/finalize the request.\n" + 
 			"    </Description>\n" + 
 			"    <WorkflowRef>\n" + 
-			"      <Reference class=\"sailpoint.object.Workflow\" id=\"ff8081815aa2fdde015aa2fe5dce0043\" name=\"Identity Request Finalize\"/>\n" + 
+			"      <Reference class=\"sailpoint.object.Workflow\" id=\"ff8081815aa414bc015aa41523b10043\" name=\"Identity Request Finalize\"/>\n" + 
 			"    </WorkflowRef>\n" + 
 			"  </Step>\n" + 
 			"  <Step icon=\"Stop\" name=\"end\" posX=\"1131\" posY=\"253\"/>\n" + 
@@ -1507,7 +1509,7 @@ public class compareNodeOrder {
 	            .withTest(Input.fromString(diff))
 	            .ignoreComments()
 	            .ignoreWhitespace()                 
-	            .withNodeFilter(node -> !node.getNodeName().equals("WorkFlow"))
+	            .withNodeFilter(node -> !node.getNodeName().equals("Workflow"))
 	            .build();
 
 		Assert.assertFalse(myDiff2.toString(), myDiff2.hasDifferences());
@@ -1529,15 +1531,16 @@ public class compareNodeOrder {
 	}
 	
 	@Test
-	public void ignoreAttributes() {
+	public void ignoreAttributesAndNodeOrder() {
 		// test that ignores specific attributes in order to pass but diff.xml has aggregated which includes extra map keys to ignore
 				Diff myDiff3 = DiffBuilder.compare(Input.fromString(clean))                
 			            .withTest(Input.fromString(diff))
 			            .ignoreComments()
-			            .ignoreWhitespace()                 
+			            .ignoreWhitespace()
+			            .checkForSimilar()
 			            //need to ignore aggregate keys to pass test
 			            .withAttributeFilter(a -> !("created".equals(a.getName()) || "id".equals(a.getName()) || "modified".equals(a.getName()) ))
-			            .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndText))
+			            .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndAllAttributes))
 			            .build();
 
 				Assert.assertFalse(myDiff3.toString(), myDiff3.hasDifferences());
@@ -1552,7 +1555,7 @@ public class compareNodeOrder {
 	            .ignoreComments()
 	            .ignoreWhitespace()
 	            .withAttributeFilter(a -> !("created".equals(a.getName()) || "id".equals(a.getName()) || "modified".equals(a.getName()) )
-)	            .withDifferenceEvaluator(new IgnoreAttributeDifferenceEvaluator("false"))
+)	       
 	            .build();
 
 		Assert.assertFalse(myDiff5.toString(), myDiff5.hasDifferences());
