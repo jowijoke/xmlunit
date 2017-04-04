@@ -25,9 +25,10 @@ import org.json.JSONObject;
  
 public class RestTest {
     private static final String iiqIP = "localhost";
-    private static final int iiqPort = 8078;
+    private static final int iiqPort = 8092;
     private static final String iiqUser = "spadmin";
     private static final String iiqPass = "admin";
+    private static final String iiqName = "clean";
  
     public static void main(String[] args) {
      
@@ -45,7 +46,7 @@ public class RestTest {
         //
      
      
-        String iiqRequest = "http://" + iiqIP + ":" + String.valueOf(iiqPort) + "/diff/rest/ping";
+        String iiqRequest = "http://" + iiqIP + ":" + String.valueOf(iiqPort) + "/"+ iiqName + "/rest/ping";
         System.out.println("\nRequest: " + iiqRequest);
         HttpGet request = new HttpGet(iiqRequest);
         HttpResponse response = client.execute(request);
@@ -58,7 +59,7 @@ public class RestTest {
         // Call to get Application Objects
         //
      
-        iiqRequest = "http://" + iiqIP + ":" + String.valueOf(iiqPort) + "/diff/rest/debug/Application?listObjects";
+        iiqRequest = "http://" + iiqIP + ":" + String.valueOf(iiqPort) + "/"+ iiqName + "/rest/debug/Application?listObjects";
         System.out.println("\nRequest: " + iiqRequest);
         request = new HttpGet(iiqRequest);
         response = client.execute(request);
@@ -80,7 +81,7 @@ public class RestTest {
                //
                // Request to get objects xml
                //
-               String xmlRequest = "http://" + iiqIP + ":" + String.valueOf(iiqPort) + "/diff/rest/debug/Application/" + j.replaceAll(" ", "%20");
+               String xmlRequest = "http://" + iiqIP + ":" + String.valueOf(iiqPort)+ "/"+ iiqName + "/rest/debug/Application/" + j.replaceAll(" ", "%20");
                request = new HttpGet(xmlRequest);
                response = client.execute(request);
                rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
@@ -98,7 +99,7 @@ public class RestTest {
 
             }
             
-         // Get a set of the xml entries
+            // Get a set of the xml entries
             Set sets = xmlMap.entrySet();
             
             // Get an iterator to get xml
