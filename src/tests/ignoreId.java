@@ -499,7 +499,7 @@ public class ignoreId {
 			            .normalizeWhitespace()
 			            //need to ignore aggregate keys to pass test
 			            .withAttributeFilter(a -> !("created".equals(a.getName()) || "id".equals(a.getName()) || "modified".equals(a.getName()) ))
-			            .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndAllAttributes,ElementSelectors.byNameAndText))
+			            .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndAllAttributes,ElementSelectors.Default))
 			            .build();
 
 				Assert.assertFalse(myDiff3.toString(), myDiff3.hasDifferences());
