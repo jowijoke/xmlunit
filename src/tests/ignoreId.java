@@ -6,6 +6,7 @@ import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.builder.Input;
 import org.xmlunit.diff.DefaultNodeMatcher;
 import org.xmlunit.diff.Diff;
+import org.xmlunit.diff.ElementSelectors;
 
 
 public class ignoreId {
@@ -493,10 +494,12 @@ public class ignoreId {
 				Diff myDiff3 = DiffBuilder.compare(Input.fromString(clean))                
 			            .withTest(Input.fromString(diff))
 			            .ignoreComments()
-			            .ignoreWhitespace()                 
+			            .ignoreWhitespace() 
+			            .checkForSimilar()
+			            .normalizeWhitespace()
 			            //need to ignore aggregate keys to pass test
 			            .withAttributeFilter(a -> !("created".equals(a.getName()) || "id".equals(a.getName()) || "modified".equals(a.getName()) ))
-			            .withNodeMatcher(new DefaultNodeMatcher())
+			            .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndAllAttributes,ElementSelectors.byNameAndText))
 			            .build();
 
 				Assert.assertFalse(myDiff3.toString(), myDiff3.hasDifferences());
@@ -511,7 +514,7 @@ public class ignoreId {
 	            .ignoreComments()
 	            .ignoreWhitespace()
 	            .withAttributeFilter(a -> !("created".equals(a.getName()) || "id".equals(a.getName()) || "modified".equals(a.getName()) )
-)	            .withDifferenceEvaluator(new IgnoreAttributeDifferenceEvaluator("false"))
+)	         
 	            .build();
 
 		Assert.assertFalse(myDiff5.toString(), myDiff5.hasDifferences());

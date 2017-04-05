@@ -42,4 +42,33 @@ class IIQDifferenceEvaluator implements DifferenceEvaluator {
         
         return outcome;
     }
+    
+    @Override
+    public ComparisonResult evaluate(Comparison comparison, ComparisonResult outcome) {
+        if (outcome == ComparisonResult.EQUAL) return outcome; // only evaluate differences.
+        final Node controlNode = comparison.getControlDetails().getTarget();
+        final Node testNode = comparison.getTestDetails().getTarget();
+        
+        if (controlNode instanceof Element && testNode instanceof Element) {
+        	 Element controlElement = (Element) controlNode;
+             Element testElement = (Element) testNode;
+             
+             final String testValue = testElement.getTextContent();
+             final String controlValue = controlElement.getTextContent();
+             
+             System.out.println("testValue: " + testValue  + "\nControlValue: " + controlValue);
+             
+            if ( testElement.getTagName().equalsIgnoreCase("value")) {
+            	 //if(testValue.equalsIgnoreCase("false")) {
+            		 System.out.println("boolean");
+            	// }
+            	
+            	// will evaluate this difference as similar
+            }
+        }
+       
+        
+        return outcome;
+    }
+    
 } 

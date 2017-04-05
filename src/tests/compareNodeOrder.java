@@ -753,11 +753,24 @@ public class compareNodeOrder {
 	final String diff = "<?xml version='1.0' encoding='UTF-8'?>\n" + 
 			"<!DOCTYPE Workflow PUBLIC \"sailpoint.dtd\" \"sailpoint.dtd\">\n" + 
 			"<Workflow configForm=\"Provisioning Workflow Config Form\" created=\"1488811533902\" handler=\"sailpoint.api.StandardWorkflowHandler\" id=\"ff8081815aa414bc015aa415264e0046\" libraries=\"Identity,Role,PolicyViolation,LCM,BatchRequest\" name=\"LCM Provisioning\" taskType=\"LCM\" type=\"LCMProvisioning\">\n" + 
+			"  <Variable input=\"true\" name=\"identityName\">\n" + 
+			"    <Description>The name of the identity being updated.</Description>\n" + 
+			"  </Variable>\n" +
 			"  <Variable initializer=\"script:(identityDisplayName != void) ? identityDisplayName : resolveDisplayName(identityName)\" input=\"true\" name=\"identityDisplayName\">\n" + 
 			"    <Description>\n" + 
 			"      The displayName of the identity being updated.\n" + 
 			"      Query for this using a projection query and fall back to the name.\n" + 
 			"    </Description>\n" + 
+			"  </Variable>\n" + 
+			"  <Variable initializer=\"false\" input=\"true\" name=\"endOnManualWorkItems\">\n" + 
+			"    <Description>Option to skip requests with manual work items.</Description>\n" + 
+			"  </Variable>\n" + 
+			"  <Variable initializer=\"false\" input=\"true\" name=\"endOnProvisioningForms\">\n" + 
+			"    <Description>Option to skip requests with provisioning forms.</Description>\n" + 
+			"  </Variable>\n" + 
+			
+			"  <Variable input=\"true\" name=\"plan\">\n" + 
+			"    <Description>The provisioning plan ready to execute.</Description>\n" + 
 			"  </Variable>\n" + 
 			"  <Variable input=\"true\" name=\"flow\">\n" + 
 			"    <Description>\n" + 
@@ -770,20 +783,6 @@ public class compareNodeOrder {
 			"      RolesRequest\n" + 
 			"    </Description>\n" + 
 			"  </Variable>\n" + 
-			"  <Variable input=\"true\" name=\"identityName\">\n" + 
-			"    <Description>The name of the identity being updated.</Description>\n" + 
-			"  </Variable>\n" + 
-			"  <Variable initializer=\"false\" input=\"true\" name=\"endOnManualWorkItems\">\n" + 
-			"    <Description>Option to skip requests with manual work items.</Description>\n" + 
-			"  </Variable>\n" + 
-			"  <Variable initializer=\"false\" input=\"true\" name=\"endOnProvisioningForms\">\n" + 
-			"    <Description>Option to skip requests with provisioning forms.</Description>\n" + 
-			"  </Variable>\n" + 
-			
-			"  <Variable input=\"true\" name=\"plan\">\n" + 
-			"    <Description>The provisioning plan ready to execute.</Description>\n" + 
-			"  </Variable>\n" + 
-			
 			"  <Variable editable=\"true\" initializer=\"false\" name=\"optimisticProvisioning\">\n" + 
 			"    <Description>\n" + 
 			"      Set to true to enable optimistic provisioning.  This will cause\n" + 
@@ -1430,8 +1429,8 @@ public class compareNodeOrder {
 			"    <Transition to=\"Notify\"/>\n" + 
 			"  </Step>\n" + 
 			"  <Step icon=\"Task\" name=\"Notify\" posX=\"1131\" posY=\"7\">\n" + 
-			"    <Arg name=\"approvalScheme\" value=\"ref:approvalScheme\"/>\n" + 
 			"    <Arg name=\"approvalSet\" value=\"ref:approvalSet\"/>\n" + 
+			"    <Arg name=\"approvalScheme\" value=\"ref:approvalScheme\"/>\n" + 
 			"    <Arg name=\"flow\" value=\"ref:flow\"/>\n" + 
 			"    <Arg name=\"identityDisplayName\" value=\"ref:identityDisplayName\"/>\n" + 
 			"    <Arg name=\"identityName\" value=\"ref:identityName\"/>\n" + 
@@ -1540,12 +1539,13 @@ public class compareNodeOrder {
 			            .checkForSimilar()
 			            //need to ignore aggregate keys to pass test
 			            .withAttributeFilter(a -> !("created".equals(a.getName()) || "id".equals(a.getName()) || "modified".equals(a.getName()) ))
-			            .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndAllAttributes))
+			            .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndAllAttributes,ElementSelectors.byNameAndText))
 			            .build();
 
 				Assert.assertFalse(myDiff3.toString(), myDiff3.hasDifferences());
 						
 	}
+	
 	
 	@Test
 	public void IgnoreAttDiffEvaluator() {
@@ -1554,8 +1554,7 @@ public class compareNodeOrder {
 	            .withTest(Input.fromString(diff))
 	            .ignoreComments()
 	            .ignoreWhitespace()
-	            .withAttributeFilter(a -> !("created".equals(a.getName()) || "id".equals(a.getName()) || "modified".equals(a.getName()) )
-)	       
+	            .withAttributeFilter(a -> !("created".equals(a.getName()) || "id".equals(a.getName()) || "modified".equals(a.getName()) ))	       
 	            .build();
 
 		Assert.assertFalse(myDiff5.toString(), myDiff5.hasDifferences());
