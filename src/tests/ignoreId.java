@@ -454,6 +454,7 @@ public class ignoreId {
 		//test to prove there's a difference in both xmls
 		Diff myDiff = DiffBuilder.compare(Input.fromString(clean))
 		              .withTest(Input.fromString(diff))
+		              .checkForSimilar()
 		              .build();
 
 		Assert.assertFalse(myDiff.toString(), myDiff.hasDifferences());

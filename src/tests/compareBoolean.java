@@ -4,7 +4,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.builder.Input;
+import org.xmlunit.diff.DefaultNodeMatcher;
 import org.xmlunit.diff.Diff;
+import org.xmlunit.diff.ElementSelectors;
 
 
 public class compareBoolean {
@@ -46,6 +48,7 @@ public class compareBoolean {
 		//test to prove there's a difference in both xmls
 		Diff myDiff = DiffBuilder.compare(Input.fromString(clean))
 		              .withTest(Input.fromString(diff))
+		              .checkForSimilar()
 		              .build();
 
 		Assert.assertFalse(myDiff.toString(), myDiff.hasDifferences());
@@ -105,6 +108,7 @@ public class compareBoolean {
 	            .checkForSimilar()
 	            .withAttributeFilter(a -> !("created".equals(a.getName()) || "id".equals(a.getName()) || "modified".equals(a.getName()) )
 )	            .withDifferenceEvaluator(new IIQDifferenceEvaluator())
+	            .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndAllAttributes,ElementSelectors.Default))
 	            .build();
 
 		Assert.assertFalse(myDiff5.toString(), myDiff5.hasDifferences());

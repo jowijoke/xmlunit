@@ -14,35 +14,48 @@ class IIQDifferenceEvaluator implements DifferenceEvaluator {
         
     }
 
-    @Override
+    /*@Override
     public ComparisonResult evaluate(Comparison comparison, ComparisonResult outcome) {
         if (outcome == ComparisonResult.EQUAL) return outcome; // only evaluate differences.
         
         final Node testNode = comparison.getTestDetails().getTarget();
+
+
         
-        if (testNode instanceof Element) {
+        if ( testNode instanceof Element) {
            
-            Element test = (Element) testNode;
-            
-            final String testValue = test.getTextContent();
-            final String testName = test.getLastChild().getNodeName();
+            Element test = (Element) testNode
       
             
-            if (testName.equals("Boolean"))  {
-            	System.out.println("if 1");			
-            	 if(testValue.equalsIgnoreCase("false")) {
+            final String testValue = test.getTextContent();
+            final String testName = test.getFirstChild().getNodeName();
+            
+      
+
+            if(testName.equalsIgnoreCase("Boolean")) {
+           	 System.out.println("found boolean");
+           	 if(testValue.equalsIgnoreCase("false")) {
+           		 System.out.println("similar2"); 
+           		 return ComparisonResult.SIMILAR;
+           	 }
+            }
+            
+                 if(testValue.equalsIgnoreCase("false")) {
             		 System.out.println("similar");
             		 return ComparisonResult.SIMILAR;
             	 }
+                 
+                 
             	
-            	// will evaluate this difference as similar
+     
             }
-        }
+        
        
         
         return outcome;
-    }
+    }*/
     
+    //difference here is i included controlNode & testElement*****.getParentNode()***
     @Override
     public ComparisonResult evaluate(Comparison comparison, ComparisonResult outcome) {
         if (outcome == ComparisonResult.EQUAL) return outcome; // only evaluate differences.
@@ -50,17 +63,18 @@ class IIQDifferenceEvaluator implements DifferenceEvaluator {
         final Node testNode = comparison.getTestDetails().getTarget();
         
         if (controlNode instanceof Element && testNode instanceof Element) {
-        	 Element controlElement = (Element) controlNode;
-             Element testElement = (Element) testNode;
-             
+        	 Element controlElement = (Element) controlNode.getParentNode();
+             Element testElement = (Element) testNode.getParentNode();
+            
              final String testValue = testElement.getTextContent();
              final String controlValue = controlElement.getTextContent();
              
              System.out.println("testValue: " + testValue  + "\nControlValue: " + controlValue);
              
-            if ( testElement.getTagName().equalsIgnoreCase("value")) {
+            if ( testValue.equalsIgnoreCase("false")) {
             	 //if(testValue.equalsIgnoreCase("false")) {
             		 System.out.println("boolean");
+            		 return ComparisonResult.SIMILAR;
             	// }
             	
             	// will evaluate this difference as similar

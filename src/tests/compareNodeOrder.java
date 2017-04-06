@@ -1274,6 +1274,15 @@ public class compareNodeOrder {
 			"          This will only run if the approvalSplitPoint is configured.\n" + 
 			"      </Description>\n" + 
 			"    <Transition to=\"Approve and Provision Split\"/>\n" + 
+			"  </Step>\n" +
+			"  <Step action=\"call:joinLCMProvWorkflowSplits\" icon=\"Task\" name=\"Assimilate Splits\" posX=\"914\" posY=\"63\">\n" + 
+			"    <Arg name=\"splitProjects\" value=\"ref:splitProjects\"/>\n" + 
+			"    <Arg name=\"splitWorkItemComments\" value=\"ref:splitWorkItemComments\"/>\n" + 
+			"    <Arg name=\"splitApprovalSet\" value=\"ref:splitApprovalSet\"/>\n" + 
+			"    <Description>\n" + 
+			"          Assimilate all projects returned from the split into the global project.\n" + 
+			"      </Description>\n" + 
+			"    <Transition to=\"Refresh Identity\"/>\n" + 
 			"  </Step>\n" + 
 			"  <Step icon=\"Task\" name=\"Approve and Provision Split\" posX=\"783\" posY=\"63\">\n" + 
 			"    <Arg name=\"approvalMode\" value=\"ref:approvalMode\"/>\n" + 
@@ -1351,15 +1360,7 @@ public class compareNodeOrder {
 			"    </WorkflowRef>\n" + 
 			"    <Transition to=\"Assimilate Splits\"/>\n" + 
 			"  </Step>\n" + 
-			"  <Step action=\"call:joinLCMProvWorkflowSplits\" icon=\"Task\" name=\"Assimilate Splits\" posX=\"914\" posY=\"63\">\n" + 
-			"    <Arg name=\"splitProjects\" value=\"ref:splitProjects\"/>\n" + 
-			"    <Arg name=\"splitWorkItemComments\" value=\"ref:splitWorkItemComments\"/>\n" + 
-			"    <Arg name=\"splitApprovalSet\" value=\"ref:splitApprovalSet\"/>\n" + 
-			"    <Description>\n" + 
-			"          Assimilate all projects returned from the split into the global project.\n" + 
-			"      </Description>\n" + 
-			"    <Transition to=\"Refresh Identity\"/>\n" + 
-			"  </Step>\n" + 
+
 			"  <Step icon=\"Task\" name=\"Approve and Provision\" posX=\"699\" posY=\"7\">\n" + 
 			"    <Arg name=\"approvalMode\" value=\"ref:approvalMode\"/>\n" + 
 			"    <Arg name=\"approvalScheme\" value=\"ref:approvalScheme\"/>\n" + 
@@ -1495,6 +1496,7 @@ public class compareNodeOrder {
 		//test to prove there's a difference in both xmls
 		Diff myDiff = DiffBuilder.compare(Input.fromString(clean))
 		              .withTest(Input.fromString(diff))
+		              .checkForSimilar()
 		              .build();
 
 		Assert.assertFalse(myDiff.toString(), myDiff.hasDifferences());
