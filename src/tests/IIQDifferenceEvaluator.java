@@ -14,48 +14,9 @@ class IIQDifferenceEvaluator implements DifferenceEvaluator {
         
     }
 
-    /*@Override
-    public ComparisonResult evaluate(Comparison comparison, ComparisonResult outcome) {
-        if (outcome == ComparisonResult.EQUAL) return outcome; // only evaluate differences.
-        
-        final Node testNode = comparison.getTestDetails().getTarget();
-
-
-        
-        if ( testNode instanceof Element) {
-           
-            Element test = (Element) testNode
-      
-            
-            final String testValue = test.getTextContent();
-            final String testName = test.getFirstChild().getNodeName();
-            
-      
-
-            if(testName.equalsIgnoreCase("Boolean")) {
-           	 System.out.println("found boolean");
-           	 if(testValue.equalsIgnoreCase("false")) {
-           		 System.out.println("similar2"); 
-           		 return ComparisonResult.SIMILAR;
-           	 }
-            }
-            
-                 if(testValue.equalsIgnoreCase("false")) {
-            		 System.out.println("similar");
-            		 return ComparisonResult.SIMILAR;
-            	 }
-                 
-                 
-            	
-     
-            }
-        
-       
-        
-        return outcome;
-    }*/
+ 
     
-    //difference here is i included controlNode & testElement*****.getParentNode()***
+    
     @Override
     public ComparisonResult evaluate(Comparison comparison, ComparisonResult outcome) {
         if (outcome == ComparisonResult.EQUAL) return outcome; // only evaluate differences.
@@ -66,23 +27,36 @@ class IIQDifferenceEvaluator implements DifferenceEvaluator {
         	 Element controlElement = (Element) controlNode.getParentNode();
              Element testElement = (Element) testNode.getParentNode();
             
-             final String testValue = testElement.getTextContent();
-             final String controlValue = controlElement.getTextContent();
+              String testValue = testElement.getTextContent();
+              String controlValue = controlElement.getTextContent();
              
-             System.out.println("testValue: " + testValue  + "\nControlValue: " + controlValue);
+              String testName = testElement.getFirstChild().getNodeName(); //or use getLastChild().getNodeName()
+              String controlName = controlElement.getFirstChild().getNodeName();
              
-            if ( testValue.equalsIgnoreCase("false")) {
-            	 //if(testValue.equalsIgnoreCase("false")) {
-            		 System.out.println("boolean");
-            		 return ComparisonResult.SIMILAR;
-            	// }
-            	
-            	// will evaluate this difference as similar
-            }
+			 System.out.println("testName: " + testName);
+			 System.out.println("controlName: " + controlName);
+             
+             System.out.println("testValue: " + testValue.toString()  + "\nControlValue: " + controlValue);
+             
+             if(testName.equalsIgnoreCase("Boolean") && controlName.equalsIgnoreCase("Boolean")) {
+            	 if(! testValue.equalsIgnoreCase("true") && ! controlValue.equalsIgnoreCase("true")) {
+            		 if(testValue.equalsIgnoreCase("false") || controlValue.equalsIgnoreCase("false")) {
+            			 System.out.println("!equal");	  
+            			 testElement.setTextContent(controlValue);
+            			 testValue = testElement.getTextContent();
+            			 System.out.println("TestValue: " + testValue);
+            			 if(testValue.equals(controlValue)) {
+            				 System.out.println("equal");
+            				 return ComparisonResult.EQUAL;
+            			 }
+            		 }
+            	 }
+             }
         }
+		return outcome;
        
         
-        return outcome;
+        
     }
     
 } 

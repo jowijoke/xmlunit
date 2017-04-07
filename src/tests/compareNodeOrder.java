@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.builder.Input;
+import org.xmlunit.diff.ComparisonResult;
+import org.xmlunit.diff.ComparisonType;
 import org.xmlunit.diff.DefaultNodeMatcher;
 import org.xmlunit.diff.Diff;
 import org.xmlunit.diff.ElementSelectors;
@@ -1475,8 +1477,8 @@ public class compareNodeOrder {
 			"    <Arg name=\"approvalSet\" value=\"ref:approvalSet\"/>\n" + 
 			"    <Arg name=\"batchRequestItemId\" value=\"ref:batchRequestItemId\"/>\n" + 
 			"    <Arg name=\"identityRequestId\" value=\"ref:identityRequestId\"/>\n" + 
-			"    <Arg name=\"project\" value=\"ref:project\"/>\n" + 
 			"    <Arg name=\"priority\" value=\"ref:workItemPriority\"/>\n" + 
+			"    <Arg name=\"project\" value=\"ref:project\"/>\n" + 
 			"    <Arg name=\"ticketManagementApplication\" value=\"ref:ticketManagementApplication\"/>\n" + 
 			"    <Arg name=\"trace\" value=\"ref:trace\"/>\n" + 
 			"    <Description>\n" + 
@@ -1542,6 +1544,14 @@ public class compareNodeOrder {
 			            //need to ignore aggregate keys to pass test
 			            .withAttributeFilter(a -> !("created".equals(a.getName()) || "id".equals(a.getName()) || "modified".equals(a.getName()) ))
 			            .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndAllAttributes,ElementSelectors.Default))
+			            .withDifferenceEvaluator(((comparison, outcome) -> {
+			                if (outcome == ComparisonResult.DIFFERENT && 
+			                    comparison.getType() == ComparisonType.CHILD_NODELIST_SEQUENCE) {
+			                       return ComparisonResult.EQUAL;
+			                }
+
+			                return outcome;
+			            }))
 			            .build();
 
 				Assert.assertFalse(myDiff3.toString(), myDiff3.hasDifferences());

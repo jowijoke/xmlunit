@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.builder.Input;
+import org.xmlunit.diff.ComparisonResult;
+import org.xmlunit.diff.ComparisonType;
 import org.xmlunit.diff.DefaultNodeMatcher;
 import org.xmlunit.diff.Diff;
 import org.xmlunit.diff.ElementSelectors;
@@ -501,6 +503,14 @@ public class ignoreId {
 			            //need to ignore aggregate keys to pass test
 			            .withAttributeFilter(a -> !("created".equals(a.getName()) || "id".equals(a.getName()) || "modified".equals(a.getName()) ))
 			            .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndAllAttributes,ElementSelectors.Default))
+			            .withDifferenceEvaluator(((comparison, outcome) -> {
+			                if (outcome == ComparisonResult.DIFFERENT && 
+			                    comparison.getType() == ComparisonType.CHILD_NODELIST_SEQUENCE) {
+			                       return ComparisonResult.EQUAL;
+			                }
+
+			                return outcome;
+			            }))
 			            .build();
 
 				Assert.assertFalse(myDiff3.toString(), myDiff3.hasDifferences());
