@@ -3,7 +3,7 @@
 <Identity created="1488793252923" id="ff8081815aa2fdde015aa2fe343b001d" name="SelfRegistrationWorkGroup" protected="true" workgroup="true">
   <Attributes>
     <Map>
-      <entry key="displayName" value="SelfRegistrationWorkGroup"/>
+      <entry key="displayname" value="SelfRegistrationWorkGroup"/>
        <entry key="systemUser">
         <value>
           <Boolean>false</Boolean>

@@ -96,7 +96,8 @@ public class compareAggregateApplication {
 	            .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndAllAttributes,ElementSelectors.Default))
 	            .withDifferenceEvaluator(
 	                    DifferenceEvaluators.chain( new IIQChildListEvaluator(),new IIQDifferenceEvaluator()))
-	            .withNodeFilter(new AggregatorFilter())
+	            //.withNodeFilter(new AggregateFilter())
+	            .withNodeFilter(n -> !("entry".equals(n.getNodeName()))) 
 	            .ignoreComments()
 	            .ignoreWhitespace()
 	            .checkForSimilar()
