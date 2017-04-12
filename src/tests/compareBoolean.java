@@ -82,6 +82,7 @@ public class compareBoolean {
 	            .normalizeWhitespace()
 	            .checkForSimilar()
 	            .withDifferenceEvaluator(new IIQDifferenceEvaluator())
+	            .withNodeFilter(new IIQNodeFilter())
 	            .build();
 
 		Assert.assertFalse(myDiff5.toString(), myDiff5.hasDifferences());

@@ -70,24 +70,6 @@ public class compareAggregateApplication {
 	}
 	
 	@Test
-	public void IgnoreAttDiffEvaluator() throws Exception {
-		//test that creates a class to customise what one calls a similar result
-		Diff myDiff5 = DiffBuilder.compare(Input.fromFile("xml/HR/clean-hr.xml"))         
-	            .withTest(Input.fromFile("xml/HR/diff-hr.xml"))
-	            .withAttributeFilter(a -> !("created".equals(a.getName()) || "id".equals(a.getName()) || "modified".equals(a.getName()) ))
-	            .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndAllAttributes,ElementSelectors.Default))
-	            .withDifferenceEvaluator(
-	                    DifferenceEvaluators.chain(new IIQDifferenceEvaluator(), new IIQChildListEvaluator()))
-	            .ignoreComments()
-	            .ignoreWhitespace()
-	            .checkForSimilar()
-	            .build();
-
-		Assert.assertFalse(myDiff5.toString(), myDiff5.hasDifferences());
-		
-	}
-	
-	@Test
 	public void IgnoreAttDiffEvaluatorAggegate() throws Exception {
 		//test that creates a class to customise what one calls a similar result
 		Diff myDiff5 = DiffBuilder.compare(Input.fromFile("xml/HR/clean-hr.xml"))         
@@ -96,9 +78,8 @@ public class compareAggregateApplication {
 	            .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndAllAttributes,ElementSelectors.Default))
 	            .withDifferenceEvaluator(
 	                    DifferenceEvaluators.chain( new IIQChildListEvaluator(),new IIQDifferenceEvaluator()))
-	            //.withNodeFilter(new AggregateFilter())
-	            .withNodeFilter(n -> !("entry".equals(n.getNodeName()))) 
 	            .ignoreComments()
+	            .withNodeFilter(new IIQNodeFilter())
 	            .ignoreWhitespace()
 	            .checkForSimilar()
 	            .build();

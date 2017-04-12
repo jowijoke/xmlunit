@@ -27,14 +27,16 @@ class IIQDifferenceEvaluator implements DifferenceEvaluator {
 		 */
 		if (controlNode instanceof Element && testNode instanceof Element) {
 
-			System.out.println("........ELEMENT COMPARISON TEST........");
+			
 			String testNodeName = testNode.getNodeName(); 
 			String controlNodeName = controlNode.getNodeName();
 
-			System.out.println("testNodeName: " + testNodeName);
-			System.out.println("controlNodeName: " + controlNodeName);
-
 			if (testNodeName.equalsIgnoreCase("Boolean") && controlNodeName.equalsIgnoreCase("Boolean")) {
+				System.out.println("........ELEMENT COMPARISON TEST........");
+				
+				System.out.println("testNodeName: " + testNodeName);
+				System.out.println("controlNodeName: " + controlNodeName);
+				
 				String testValue = testNode.getTextContent();
 				String controlValue = controlNode.getTextContent();
 
