@@ -24,8 +24,8 @@
     </Inputs>
   </Signature>
   <Source>
-      
-          import java.util.*;
+      <![CDATA[
+      import java.util.*;
           import sailpoint.tools.Util;
           import sailpoint.tools.GeneralException;
           import sailpoint.object.Configuration;
@@ -212,5 +212,7 @@
               }
           }
     
+      ]]>
+          
     </Source>
 </Rule>

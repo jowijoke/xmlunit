@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE Application PUBLIC "sailpoint.dtd" "sailpoint.dtd">
-<Application authoritative="true" connector="sailpoint.connector.JDBCConnector" created="1488811621803" featuresString="DISCOVER_SCHEMA, PROVISIONING, GROUP_PROVISIONING, SYNC_PROVISIONING" icon="databaseIcon" id="ff8081815aa4157b015aa4167daa001f" modified="1488811640523" name="Human Resources" profileClass="" type="JDBC">
+<Application authoritative="true" connector="sailpoint.connector.JDBCConnector" created="1488811621803" featuresString="DISCOVER_SCHEMA, PROVISIONING, GROUP_PROVISIONING, SYNC_PROVISIONING" icon="databaseIcon" id="ff8081815aa4157b015aa4167daa001f" modified="1490348842604" name="Human Resources" profileClass="" type="JDBC">
   <Attributes>
     <Map>
       <entry key="SQL" value="select emp.employee_id as empid, emp.emp_firstname as firstname, emp.emp_lastname as lastname, emp.emp_work_email as email,&#xD;&#xA; job.job_title as title, loc.country_code as country, loc.city, mgr.employee_id as mgrId, stat.name as status,&#xD;&#xA; concat(emp.emp_firstname, &apos;.&apos;, emp.emp_lastname) as userid,&#xD;&#xA; dept.name as department,&#xD;&#xA; CASE WHEN emp.termination_id IS NOT NULL or stat.name like &apos;Inactive%&apos; THEN True ELSE False END as term,&#xD;&#xA; ftostart, ftoend&#xD;&#xA; &#xD;&#xA; from hs_hr_employee as emp&#xD;&#xA;&#xD;&#xA; left outer join (select ohrm_leave.emp_number, min(ohrm_leave.date)&#xD;&#xA;  as ftostart, max(ohrm_leave.date) as ftoend&#xD;&#xA;  from ohrm_leave group by ohrm_leave.emp_number) as fto&#xD;&#xA; on fto.emp_number=emp.emp_number&#xD;&#xA; left outer join ohrm_job_title as job&#xD;&#xA; on emp.job_title_code=job.id &#xD;&#xA; left outer join hs_hr_emp_reportto as empmgr&#xD;&#xA; on emp.emp_number=empmgr.erep_sub_emp_number&#xD;&#xA; left outer join hs_hr_employee as mgr&#xD;&#xA; on empmgr.erep_sup_emp_number=mgr.emp_number&#xD;&#xA; left outer join hs_hr_emp_locations as emploc&#xD;&#xA; on emp.emp_number=emploc.emp_number&#xD;&#xA; left outer join ohrm_location as loc&#xD;&#xA; on emploc.location_id=loc.id&#xD;&#xA; left outer join ohrm_employment_status as stat&#xD;&#xA; on emp.emp_status=stat.id&#xD;&#xA; left outer join ohrm_subunit as dept&#xD;&#xA; on emp.work_station=dept.id&#xD;&#xA; left outer join ohrm_emp_termination as term&#xD;&#xA; on emp.emp_number=term.emp_number&#xD;&#xA;"/>
@@ -124,7 +124,7 @@
     <Reference class="sailpoint.object.Identity" id="ff8081815aa41390015aa41417060104" name="spadmin"/>
   </Owner>
   <Schemas>
-    <Schema created="1488811640522" displayAttribute="" groupAttribute="" id="ff8081815aa4157b015aa416c6ca0032" identityAttribute="empid" instanceAttribute="" nativeObjectType="account" objectType="account">
+    <Schema created="1490348842600" displayAttribute="" groupAttribute="" id="ff8081815affb60b015affb69e680002" identityAttribute="empid" instanceAttribute="" nativeObjectType="account" objectType="account">
       <AttributeDefinition name="city" remediationModificationType="None" type="string"/>
       <AttributeDefinition name="country" remediationModificationType="None" type="string"/>
       <AttributeDefinition name="department" remediationModificationType="None" type="string"/>
@@ -139,5 +139,5 @@
       <AttributeDefinition name="userid" remediationModificationType="None" type="string"/>
     </Schema>
   </Schemas>
-  <ApplicationScorecard created="1488811640521" id="ff8081815aa4157b015aa416c6c90031"/>
+  <ApplicationScorecard created="1490348842595" id="ff8081815affb60b015affb69e380001"/>
 </Application>

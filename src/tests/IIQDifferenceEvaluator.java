@@ -20,6 +20,7 @@ class IIQDifferenceEvaluator implements DifferenceEvaluator {
 		
 		final Node controlNode = comparison.getControlDetails().getTarget();
 		final Node testNode = comparison.getTestDetails().getTarget();
+		//System.out.println("controlNode: " + controlNode + "\ntestNode: " + testNode );
 		
 		/*
 		 * if two elements are boolean tags & while one boolean's TextContent is null & other is "false".
@@ -30,6 +31,8 @@ class IIQDifferenceEvaluator implements DifferenceEvaluator {
 			
 			String testNodeName = testNode.getNodeName(); 
 			String controlNodeName = controlNode.getNodeName();
+			
+			
 
 			if (testNodeName.equalsIgnoreCase("Boolean") && controlNodeName.equalsIgnoreCase("Boolean")) {
 				System.out.println("........ELEMENT COMPARISON TEST........");
@@ -54,6 +57,7 @@ class IIQDifferenceEvaluator implements DifferenceEvaluator {
 				}
 			}
 		}
+		
 		
 		/*
 		 * This if statement will be executed as long as one boolean text value is null while the other has #text.
@@ -147,5 +151,5 @@ class IIQDifferenceEvaluator implements DifferenceEvaluator {
 		return outcome;
 
 	}
-
+	
 }
